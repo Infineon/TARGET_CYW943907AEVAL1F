@@ -6,7 +6,7 @@
 *
 ********************************************************************************
 * \copyright
-* Copyright 2021 Cypress Semiconductor Corporation (an Infineon company) or
+* Copyright 2021-2022 Cypress Semiconductor Corporation (an Infineon company) or
 * an affiliate of Cypress Semiconductor Corporation
 *
 * SPDX-License-Identifier: Apache-2.0
@@ -30,25 +30,31 @@
 #include "cybsp_pins.h"
 #include "cybsp_types.h"
 #include "platform_mcu_peripheral.h"
+#include "cybsp_hw_config.h"
 
 #if defined(__cplusplus)
 extern "C" {
 #endif
 
-#define CYBSP_WIFI_INTERFACE_TYPE        CYBSP_M2M_INTERFACE
-
 /**
  * \cond INTERNAL
  */
-/* Macros that don't really belong here, but provided for compatability with middleware libraries
- * that expect them. This will be reviewed in a future release when we explore removing them from
- * other board types too. */
+
+/* Macros that don't really belong here, but provided for compatibility with
+ * middleware libraries that expect them. This will be reviewed in a future
+ * release when we explore removing them from other board types too.
+ */
 #define CY_CFG_PWR_MODE_ACTIVE          (0x00UL)
 #define CY_CFG_PWR_MODE_SLEEP           (0x01UL)
 #define CY_CFG_PWR_MODE_DEEPSLEEP       (0x02UL)
-/* M2M for WHD needs high-speed clock */
+
+/* Default to use Deep Sleep */
+#ifndef CY_CFG_PWR_SYS_IDLE_MODE
 #define CY_CFG_PWR_SYS_IDLE_MODE        (CY_CFG_PWR_MODE_ACTIVE)
-#define CY_CFG_PWR_DEEPSLEEP_LATENCY    (0UL)
+#endif
+
+#define CY_CFG_PWR_DEEPSLEEP_LATENCY    (24UL)  /* Min. 24 for this device */
+
 /** \endcond */
 
 /**
@@ -64,6 +70,19 @@ extern "C" {
  *          to the hardware module that had a problem.
  */
 cy_rslt_t cybsp_init(void);
+
+#if defined(CYBSP_CUSTOM_SYSCLK_PM_CALLBACK)
+//--------------------------------------------------------------------------------------------------
+// cybsp_register_custom_sysclk_pm_callback
+//
+// Registers a power management callback that prepares the clock system for entering deep sleep mode
+// and restore the clocks upon wakeup from deep sleep. The application should implement this
+// function and define `CYBSP_CUSTOM_SYSCLK_PM_CALLBACK` if it needs to replace the default SysClk
+// DeepSleep callback behavior with application specific logic.
+// NOTE: This is called automatically as part of \ref cybsp_init
+//--------------------------------------------------------------------------------------------------
+cy_rslt_t cybsp_register_custom_sysclk_pm_callback(void);
+#endif // defined(CYBSP_CUSTOM_SYSCLK_PM_CALLBACK)
 
 /** \} group_bsp_functions */
 

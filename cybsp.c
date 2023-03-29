@@ -7,7 +7,7 @@
 *
 ********************************************************************************
 * \copyright
-* Copyright 2021 Cypress Semiconductor Corporation (an Infineon company) or
+* Copyright 2021-2022 Cypress Semiconductor Corporation (an Infineon company) or
 * an affiliate of Cypress Semiconductor Corporation
 *
 * SPDX-License-Identifier: Apache-2.0
@@ -64,6 +64,10 @@ cy_rslt_t cybsp_init(void)
     #else // if defined(CY_USING_HAL)
     cy_rslt_t result = CY_RSLT_SUCCESS;
     #endif // if defined(CY_USING_HAL)
+
+    #if defined(CYBSP_CUSTOM_SYSCLK_PM_CALLBACK)
+    result = cybsp_register_custom_sysclk_pm_callback();
+    #endif // No default syspm callback on this device
 
     return result;
 }
