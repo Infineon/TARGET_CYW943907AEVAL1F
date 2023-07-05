@@ -37,6 +37,13 @@ extern "C" {
 #define CYBSP_USER_BTN_DRIVE          (CYHAL_GPIO_DRIVE_PULLUP)
 #endif
 
+#ifndef CYBSP_DEBUG_UART_CTS
+#define CYBSP_DEBUG_UART_CTS (NC)
+#endif
+#ifndef CYBSP_DEBUG_UART_RTS
+#define CYBSP_DEBUG_UART_RTS (NC)
+#endif
+
 #if defined(__cplusplus)
 }
 #endif

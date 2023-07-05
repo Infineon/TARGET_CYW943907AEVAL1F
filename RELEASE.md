@@ -14,6 +14,9 @@ The CYW943907AEVAL1F library includes the following:
 * API documentation
 
 ### What Changed?
+#### v1.1.0
+* Added functionality to enable BSP Assistant chip flow
+* Added macros `CYBSP_DEBUG_UART_CTS` and  `CYBSP_DEBUG_UART_RTS` to cybsp_hw_config.h
 #### v1.0.0
 Note: This revision is only compatible with ModusToolbox Tools 3.0 and newer.
 * Initial production release supporting C applications with the GCC_ARM compiler.
@@ -31,8 +34,8 @@ This version of the CYW943907AEVAL1F BSP was validated for compatibility with th
 
 | Software and Tools                        | Version |
 | :---                                      | :----:  |
-| ModusToolbox™ Software Environment        | 3.0.0   |
-| GCC Compiler                              | 10.3.1  |
+| ModusToolbox™ Software Environment        | 3.1.0   |
+| GCC Compiler                              | 12.2.1  |
 
 Minimum required ModusToolbox™ Software Environment: v3.0.0
 
